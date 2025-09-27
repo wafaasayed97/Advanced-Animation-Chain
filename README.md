@@ -23,6 +23,8 @@ Features advanced animation chaining with perfect timing, scale transformations,
 ---
 
 ## 🚀 Getting Started
+![dots](https://github.com/user-attachments/assets/434847ae-33ee-4790-bf2e-03821716ce2c)
+
 
 ### Prerequisites
 - Flutter SDK (latest stable version recommended)
