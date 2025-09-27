@@ -7,12 +7,12 @@ class LoadingDotsAnimation extends StatefulWidget {
   final double spacing;
 
   const LoadingDotsAnimation({
-    Key? key,
+    super.key,
     this.dotColor = Colors.blue,
     this.dotSize = 12.0,
     this.animationDuration = const Duration(milliseconds: 1500),
-    this.spacing = 8.0,
-  }) : super(key: key);
+    this.spacing = 10.0,
+  });
 
   @override
   _LoadingDotsAnimationState createState() => _LoadingDotsAnimationState();
@@ -21,13 +21,11 @@ class LoadingDotsAnimation extends StatefulWidget {
 class _LoadingDotsAnimationState extends State<LoadingDotsAnimation>
     with TickerProviderStateMixin {
   late AnimationController _controller;
-  
-  // Scale animations for each dot
+
   late Animation<double> _scaleAnimation1;
   late Animation<double> _scaleAnimation2;
   late Animation<double> _scaleAnimation3;
-  
-  // Opacity animations for each dot
+
   late Animation<double> _opacityAnimation1;
   late Animation<double> _opacityAnimation2;
   late Animation<double> _opacityAnimation3;
@@ -45,80 +43,66 @@ class _LoadingDotsAnimationState extends State<LoadingDotsAnimation>
       duration: widget.animationDuration,
       vsync: this,
     );
-    const double animationOffset = 0.2; 
-    const double animationDuration = 0.4; 
+    const double animationOffset = 0.2;
+    const double animationDuration = 0.4;
 
-    _scaleAnimation1 = Tween<double>(
-      begin: 1.0,
-      end: 1.5,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Interval(
-        0.0,
-        animationDuration,
-        curve: Curves.elasticOut,
+    _scaleAnimation1 = Tween<double>(begin: 1.0, end: 2).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.0, animationDuration, curve: Curves.elasticOut),
       ),
-    ));
+    );
 
-    _scaleAnimation2 = Tween<double>(
-      begin: 1.0,
-      end: 1.5,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Interval(
-        animationOffset,
-        animationOffset + animationDuration,
-        curve: Curves.elasticOut,
+    _scaleAnimation2 = Tween<double>(begin: 1.0, end: 2).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(
+          animationOffset,
+          animationOffset + animationDuration,
+          curve: Curves.elasticOut,
+        ),
       ),
-    ));
+    );
 
-    _scaleAnimation3 = Tween<double>(
-      begin: 1.0,
-      end: 1.5,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Interval(
-        animationOffset * 2,
-        animationOffset * 2 + animationDuration,
-        curve: Curves.elasticOut,
+    _scaleAnimation3 = Tween<double>(begin: 1.0, end: 2).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(
+          animationOffset * 2,
+          animationOffset * 2 + animationDuration,
+          curve: Curves.elasticOut,
+        ),
       ),
-    ));
+    );
 
-    _opacityAnimation1 = Tween<double>(
-      begin: 0.3,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Interval(
-        0.0,
-        animationDuration,
-        curve: Curves.easeInOut,
+    _opacityAnimation1 = Tween<double>(begin: 0.3, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0.0, animationDuration, curve: Curves.easeInOut),
       ),
-    ));
+    );
 
-    _opacityAnimation2 = Tween<double>(
-      begin: 0.3,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Interval(
-        animationOffset,
-        animationOffset + animationDuration,
-        curve: Curves.easeInOut,
+    _opacityAnimation2 = Tween<double>(begin: 0.3, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(
+          animationOffset,
+          animationOffset + animationDuration,
+          curve: Curves.easeInOut,
+        ),
       ),
-    ));
+    );
 
-    _opacityAnimation3 = Tween<double>(
-      begin: 0.3,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Interval(
-        animationOffset * 2,
-        animationOffset * 2 + animationDuration,
-        curve: Curves.easeInOut,
+    _opacityAnimation3 = Tween<double>(begin: 0.3, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(
+          animationOffset * 2,
+          animationOffset * 2 + animationDuration,
+          curve: Curves.easeInOut,
+        ),
       ),
-    ));
+    );
   }
 
   void _startAnimation() {
@@ -127,7 +111,7 @@ class _LoadingDotsAnimationState extends State<LoadingDotsAnimation>
 
   @override
   void dispose() {
-    _controller.dispose(); 
+    _controller.dispose();
     super.dispose();
   }
 
@@ -139,22 +123,19 @@ class _LoadingDotsAnimationState extends State<LoadingDotsAnimation>
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // First dot
             _buildAnimatedDot(
               scale: _scaleAnimation1.value,
               opacity: _opacityAnimation1.value,
             ),
-            
             SizedBox(width: widget.spacing),
-            
-            // Second dot
+
             _buildAnimatedDot(
               scale: _scaleAnimation2.value,
               opacity: _opacityAnimation2.value,
             ),
-            
+
             SizedBox(width: widget.spacing),
-            
+
             // Third dot
             _buildAnimatedDot(
               scale: _scaleAnimation3.value,
@@ -166,10 +147,7 @@ class _LoadingDotsAnimationState extends State<LoadingDotsAnimation>
     );
   }
 
-  Widget _buildAnimatedDot({
-    required double scale,
-    required double opacity,
-  }) {
+  Widget _buildAnimatedDot({required double scale, required double opacity}) {
     return Transform.scale(
       scale: scale,
       child: Opacity(
@@ -188,7 +166,7 @@ class _LoadingDotsAnimationState extends State<LoadingDotsAnimation>
 }
 
 class AdvancedLoadingDemo extends StatelessWidget {
-  const AdvancedLoadingDemo({Key? key}) : super(key: key);
+  const AdvancedLoadingDemo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -209,10 +187,9 @@ class AdvancedLoadingDemo extends StatelessWidget {
           dotColor: Colors.blue,
           dotSize: 12.0,
           animationDuration: Duration(milliseconds: 1500),
-          spacing: 8.0,
+          spacing: 10.0,
         ),
       ),
     );
   }
 }
-
